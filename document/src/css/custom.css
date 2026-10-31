@@ -1,0 +1,109 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-color-primary: #2e8555;
+  --ifm-color-primary-dark: #29784c;
+  --ifm-color-primary-darker: #277148;
+  --ifm-color-primary-darkest: #205d3b;
+  --ifm-color-primary-light: #33925d;
+  --ifm-color-primary-lighter: #359962;
+  --ifm-color-primary-lightest: #3cad6e;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+}
+
+/* For readability concerns, you should choose a lighter palette in dark mode. */
+[data-theme='dark'] {
+  --ifm-color-primary: #25c2a0;
+  --ifm-color-primary-dark: #21af90;
+  --ifm-color-primary-darker: #1fa588;
+  --ifm-color-primary-darkest: #1a8870;
+  --ifm-color-primary-light: #29d5b0;
+  --ifm-color-primary-lighter: #32d8b4;
+  --ifm-color-primary-lightest: #4fddbf;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+/* Hide the root/index doc entry from the sidebar while keeping the sidebar visible on the root page */
+.menu__list-item a[href="/"] {
+  display: none !important;
+}
+
+/* If site is served under a baseUrl other than '/', also hide that path (example: '/dcmag-document/') */
+.menu__list-item a[href="/dcmag-document/"] {
+  display: none !important;
+}
+
+/* Hide Previous/Next navigation */
+.pagination-nav {
+  display: none !important;
+}
+
+/* テーブルを横スクロール可能にする */
+.markdown table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* テーブルのセルはデフォルト設定に戻す */
+.markdown table td,
+.markdown table th {
+  white-space: nowrap;
+}
+
+/* コンテンツエリアの幅を最大化 */
+.container {
+  max-width: 100% !important;
+  padding-left: 1rem !important;
+  padding-right: 0.5rem !important;
+}
+
+.main-wrapper {
+  max-width: 100% !important;
+  padding: 0 !important;
+}
+
+.docMainContainer_node_modules-\@docusaurus-theme-classic-lib-theme-DocPage-Layout-Main-styles-module,
+.docMainContainer {
+  max-width: 100% !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.docPage,
+article.theme-doc-markdown,
+.theme-doc-markdown,
+.markdown {
+  max-width: none !important;
+}
+
+/* パディングとマージンの最適化 */
+.col.col--9,
+.col.col--8 {
+  padding-right: 0 !important;
+  padding-left: 1rem !important;
+}
+
+.docItemWrapper_node_modules-\@docusaurus-theme-classic-lib-theme-DocItem-Layout-styles-module,
+.docItemContainer_node_modules-\@docusaurus-theme-classic-lib-theme-DocItem-styles-module,
+.docItemContainer {
+  margin-right: 0 !important;
+  padding-right: 0 !important;
+}
+
+.theme-doc-markdown.markdown {
+  margin-right: 0 !important;
+  padding-right: 0 !important;
+}
+
+.row {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}

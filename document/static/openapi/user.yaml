@@ -1,0 +1,201 @@
+openapi: 3.1.0
+info:
+  title: ユーザーAPI
+  version: ''
+servers:
+  - url: http://localhost:9001
+    description: ローカル環境
+security:
+  - bearerAuth: []
+paths:
+  /api/me:
+    get:
+      summary: ユーザー情報取得(自分)
+      description: ログイン中のユーザー自身のプロフィールを取得する。ユーザーは ID トークンの `sub` で特定する。
+      operationId: getMe
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                認証エラー:
+                  value:
+                    code: AUTHENTICATION_ERROR
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                未登録:
+                  value:
+                    code: RESOURCE_NOT_FOUND
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                システムエラー:
+                  value:
+                    code: INTERNAL_SERVER_ERROR
+    post:
+      summary: ユーザー初回登録
+      description: ログイン中のユーザーを初回登録する。`email` は ID トークンの値を使用する。
+      operationId: createMe
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMeRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+              examples:
+                入力不正:
+                  value:
+                    code: VALIDATION_ERROR
+                    details:
+                      displayName:
+                        code: REQUIRED
+                        message: displayNameが設定されていません
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                認証エラー:
+                  value:
+                    code: AUTHENTICATION_ERROR
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                登録済み:
+                  value:
+                    code: RESOURCE_ALREADY_EXISTS
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                システムエラー:
+                  value:
+                    code: INTERNAL_SERVER_ERROR
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Cognito が発行した ID トークン
+  schemas:
+    MeResponse:
+      type: object
+      required:
+        - id
+        - email
+        - displayName
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: ユーザーID
+        email:
+          type: string
+          format: email
+          description: メールアドレス
+        displayName:
+          type: string
+          description: 表示名
+          example: 山田 太郎
+    CreateMeRequest:
+      type: object
+      required:
+        - displayName
+      properties:
+        displayName:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: 表示名
+          example: 山田 太郎
+    ErrorResponse:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          description: エラーコード
+          enum:
+            - AUTHENTICATION_ERROR
+            - RESOURCE_NOT_FOUND
+            - RESOURCE_ALREADY_EXISTS
+            - INTERNAL_SERVER_ERROR
+    ValidationErrorResponse:
+      type: object
+      required:
+        - code
+        - details
+      properties:
+        code:
+          type: string
+          description: エラーコード
+          enum:
+            - VALIDATION_ERROR
+        details:
+          type: object
+          description: バリデーションエラーの詳細。key はエラーとなったリクエスト項目名
+          additionalProperties:
+            type: object
+            required:
+              - code
+              - message
+            properties:
+              code:
+                type: string
+                description: バリデーションエラーコード
+                enum:
+                  - REQUIRED
+                  - REQUIRED_ANY_OF
+                  - INVALID_LENGTH
+                  - INVALID_RANGE
+                  - INVALID_CHARACTER_TYPE
+                  - INVALID_FORMAT
+                  - INVALID_VALUE
+                  - INVALID_PERIOD
+                  - FUTURE_DATE_NOT_ALLOWED
+                  - PAST_DATE_NOT_ALLOWED
+              message:
+                type: string
+                description: 項目名を含むエラーメッセージ
