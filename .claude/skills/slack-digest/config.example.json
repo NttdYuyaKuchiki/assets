@@ -1,0 +1,35 @@
+{
+  "workspace_url": "https://your-workspace.slack.com",
+  "team_id": "Txxxxxxxx",
+  "channel_urls": {
+    "general": "https://app.slack.com/client/T0XXXXXXX/C0XXXXXXX",
+    "dev-team": "https://app.slack.com/client/T0XXXXXXX/C0YYYYYYY"
+  },
+  "max_messages_per_channel": 300,
+  "filters": {
+    "thread_lookback_days": 7,
+    "max_threads_per_channel": 50,
+    "min_thread_replies": 1,
+    "max_replies_per_thread": 100,
+    "max_text_chars": 0,
+    "include_keywords": [],
+    "exclude_keywords": [],
+    "exclude_users": [],
+    "drop_empty_posts": true,
+    "earlier_reply_chars": 0
+  },
+  "_filters_help": {
+    "_説明": "JSONはコメント不可のため、この _ で始まる項目を説明として置く (処理には使われない)",
+    "max_messages_per_channel": "1チャンネルあたりの出力投稿数の上限",
+    "thread_lookback_days": "対象期間より前に立った投稿のうち、何日前までのスレッドを調べるか。期間内に返信が付いていれば『継続中』として出力する。大きいほど拾える古いスレッドが増えるが、スレッドを開く回数が増えて遅くなる",
+    "max_threads_per_channel": "返信を取りに行くスレッド数の上限 (新しい順)",
+    "min_thread_replies": "この件数以上の返信があるスレッドだけ調べる (1なら返信のある全スレッド)",
+    "max_replies_per_thread": "1スレッドあたり出力する返信数の上限。超えた場合は最初の3件と最新の分を残す",
+    "max_text_chars": "1投稿・1返信の本文の最大文字数。0なら切り捨てない (既定)。メンション行の不在情報・cc羅列は自動で圧縮される",
+    "include_keywords": "指定すると、投稿またはスレッド内にこの語を含むものだけ出力 (空なら全件)",
+    "exclude_keywords": "この語を含む投稿・返信を除外",
+    "exclude_users": "この名前を含む投稿者の投稿・返信を除外 (自動通知bot等)",
+    "drop_empty_posts": "本文が空で返信もない投稿 (workflow/画像のみ等で本文を取得できないもの) を除外",
+    "earlier_reply_chars": "継続スレッドで対象期間より前の返信 (earlier_context) の1返信あたり最大文字数。0なら全文 (既定)"
+  }
+}
